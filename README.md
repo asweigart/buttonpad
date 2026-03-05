@@ -15,6 +15,8 @@ C,(,),⌫
 """
 ```
 
+Keep in mind that the text on buttons and labels can include emoji!
+
 Key features:
 
 * Pure-Python code that only depends on the standard library, built on top of tkinter. (Pillow is optional.)
@@ -29,7 +31,7 @@ Key features:
 
 ## Check Out Demo Programs with the Launcher
 
-Run `python -m buttonpad` to run the launcher program to view several demo programs and games made with Buttonpad.
+Run `python -m buttonpad` to run the launcher program to view several demo programs and games made with Buttonpad. The source code for these demo programs can be found at [https://github.com/asweigart/buttonpad/tree/main/buttonpad](https://github.com/asweigart/buttonpad/tree/main/buttonpad)
 
 ![Screenshot](https://raw.githubusercontent.com/asweigart/buttonpad/main/screenshot-2048.webp)
 ![Screenshot](https://raw.githubusercontent.com/asweigart/buttonpad/main/screenshot-calc.webp)
@@ -238,3 +240,8 @@ pad.map_key("space", 1, 0)
 - macOS: For fully colorable buttons, install `tkmacosx`. When unavailable, ButtonPad falls back to the system `tk.Button` (colors may not update on some macOS builds). You’ll see a console message suggesting: `pip install tkmacosx`.
 - Dialog helpers use `pymsgbox` and are re-exported for convenience.
 
+## Road Map
+
+- Complete type hints and doc strings
+- Checkboxes / "Toggle" buttons
+- Slider

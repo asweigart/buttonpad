@@ -2,14 +2,15 @@ from __future__ import annotations
 
 import subprocess
 import sys
+import os
 from pathlib import Path
 from typing import List, Tuple
 
 import buttonpad
 
 # Launcher: grid of 6 x 5 buttons launching example scripts (hard-coded list).
-ROWS = 5
-COLS = 6  # 30 cells total
+ROWS = 7
+COLS = 4  # 30 cells total
 
 EXAMPLES_DIR = Path(__file__).parent
 
@@ -58,14 +59,15 @@ def main() -> None:
             idx = r * COLS + c
             if idx < len(EXAMPLES):
                 tokens.append(EXAMPLES[idx][0])
+                tokens.append('View Source: ' + EXAMPLES[idx][0])
             else:
-                tokens.append("`''")  # blank label
+                tokens.append("`'',`''")  # blank label
         layout_rows.append(",".join(tokens))
     layout = '\n'.join(layout_rows)
 
     pad = buttonpad.ButtonPad(
         layout,
-        cell_width=120,
+        cell_width=110,
         cell_height=50,
         padx=6,
         pady=6,
@@ -97,15 +99,42 @@ def main() -> None:
                     pass
         return handler
 
+    def make_view_source_handler(script_name: str):
+        def handler(el, x, y):
+            path = label_to_path.get(script_name.removeprefix('View Source: '))
+            if not path:
+                return
+            try:
+                if sys.platform.startswith("darwin"):
+                    subprocess.run(["open", str(path)])
+                elif os.name == "nt":
+                    os.startfile(str(path))
+                else:
+                    subprocess.run(["xdg-open", str(path)])
+            except Exception as e:
+                try:
+                    buttonpad.alert(f'Failed to view source for {script_name}: {e}', title='View Source Error')
+                except Exception:
+                    pass
+        return handler
+
     # Assign handlers
     for r in range(ROWS):
         for c in range(COLS):
-            el = pad[c, r]
+            el = pad[c * 2, r]
             name = el.text.strip()
             if not name:
                 continue
             el.on_click = make_launch_handler(name)
-            el.tooltip = f'Run {name}.py'
+            el.tooltip = f'Run {name}'
+
+            el = pad[c * 2 + 1, r]
+            name = el.text.strip()
+            if not name:
+                continue
+            el.on_click = make_view_source_handler(name)
+            el.tooltip = f'{name}'
+
 
     pad.run()
 

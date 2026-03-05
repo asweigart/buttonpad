@@ -1,9 +1,6 @@
-"""
-TODO
-"""
 from __future__ import annotations
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 # TODO - be able to attach hotkeys to callback functions on the ButtonPad object.
 
@@ -166,13 +163,15 @@ class _BPBase:
         bg_color: Optional[Union[str, Tuple[int, int, int], Sequence[int]]] = None,
         tooltip: Optional[str] = None,
         anchor: Optional[str] = "center",
+        font_name: str = "TkDefaultFont",
+        font_size: int = 12,
         on_click: BPCallbackType = None,
         on_enter: BPCallbackType = None,
         on_exit: BPCallbackType = None,
     ) -> None:
         self.widget: tk.Widget = widget
-        self._font_name = "TkDefaultFont"
-        self._font_size = 12
+        self._font_name = font_name
+        self._font_size = font_size
 
         # Text handling:
         # - Use textvariable only for widgets known to support it reliably (Label/Entry).
@@ -764,6 +763,8 @@ class ButtonPad:
         border: int = 0,  # padding between the grid and the window edge
         status_bar: Optional[str] = None,  # initial status bar text; None means no status bar
         menu: Optional[Dict[str, Any]] = None,  # menu definition dict; see menu property for details
+        font_name: str = "TkDefaultFont",  # default font name for all widgets
+        font_size: int = 12,  # default font size for all widgets
     ):
         self._layout = layout
         self._cell_width_input = cell_width
@@ -824,6 +825,11 @@ class ButtonPad:
             except Exception:
                 logging.debug(f"Ignored exception in {__FUNC__()} at line {__LINE__()}, version {__version__}: {sys.exc_info()[1]}")
 
+        # Default font for all widgets
+        self._default_font_name = font_name
+        self._default_font_size = font_size
+
+    
         # Outer container; border controls padding to window edges
         self._container = tk.Frame(self.root, bg=self.window_bg_color)
         self._container.pack(padx=self.border, pady=self.border, fill="both", expand=True)
