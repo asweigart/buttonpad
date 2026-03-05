@@ -1611,6 +1611,7 @@ class ButtonPad:
                         text = tok[6:].lstrip()
                     else:
                         text = tok[1:-1]
+                    text = text.replace("\\n", "\n")
                     row.append(_Spec(kind="label", text=text, anchor="center", no_merge=no_merge))
                     continue
 
@@ -1620,6 +1621,7 @@ class ButtonPad:
                         text = tok[8:].lstrip()
                     else:
                         text = tok[1:-1]
+                    text = text.replace("\\n", "\n")
                     row.append(_Spec(kind="entry", text=text, no_merge=no_merge))
                     continue
 
@@ -1631,6 +1633,7 @@ class ButtonPad:
                 # plain button
                 if tok.startswith("BUTTON:"):
                     tok = tok[7:].lstrip()
+                tok = tok.replace("\\n", "\n")
                 row.append(_Spec(kind="button", text=tok, no_merge=no_merge))
             rows.append(row)
         return rows

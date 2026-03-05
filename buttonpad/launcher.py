@@ -59,7 +59,7 @@ def main() -> None:
             idx = r * COLS + c
             if idx < len(EXAMPLES):
                 tokens.append(EXAMPLES[idx][0])
-                tokens.append('View Source: ' + EXAMPLES[idx][0])
+                tokens.append('View Source:\\n' + EXAMPLES[idx][0])
             else:
                 tokens.append("`'',`''")  # blank label
         layout_rows.append(",".join(tokens))
@@ -101,7 +101,7 @@ def main() -> None:
 
     def make_view_source_handler(script_name: str):
         def handler(el, x, y):
-            path = label_to_path.get(script_name.removeprefix('View Source: '))
+            path = label_to_path.get(script_name.removeprefix('View Source:\n'))
             if not path:
                 return
             try:
