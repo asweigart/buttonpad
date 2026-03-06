@@ -1,4 +1,3 @@
-from __future__ import annotations
 """2048 number merging puzzle.
 
 Rules summary:
@@ -13,8 +12,10 @@ Implementation notes:
     * apply_move handles directional orientation by reversing lines for right/down.
     * After a move we check for win (2048) or if no moves remain (loss).
 """
+from __future__ import annotations
+
 import random
-from typing import List, Tuple, Optional, Dict
+from typing import List, Tuple, Dict
 import buttonpad
 
 COLS = 4
@@ -102,7 +103,8 @@ def move_line(line: List[int]) -> Tuple[List[int], bool, bool]:
             merged.append(nv)
             i += 2
         else:
-            merged.append(tiles[i]); i += 1
+            merged.append(tiles[i])
+            i += 1
     merged += [0] * (len(line) - len(merged))
     moved = merged != original
     return merged, moved, made_2048
@@ -121,50 +123,69 @@ def apply_move(direction: str, pad, board: BoardType) -> bool:
             xs = list(range(COLS))
             line = [board[(x, y)] for x in xs]
             nl, moved, made_2048 = move_line(line)
-            moved_any |= moved; won_this_move |= made_2048
-            for idx, x in enumerate(xs): board[(x, y)] = nl[idx]
+            moved_any |= moved
+            won_this_move |= made_2048
+            for idx, x in enumerate(xs):
+                board[(x, y)] = nl[idx]
     elif direction == "right":
         for y in range(ROWS):
             xs = list(reversed(range(COLS)))
             line = [board[(x, y)] for x in xs]
             nl, moved, made_2048 = move_line(line)
-            moved_any |= moved; won_this_move |= made_2048
+            moved_any |= moved
+            won_this_move |= made_2048
             nl = list(reversed(nl))
-            for idx, x in enumerate(range(COLS)): board[(x, y)] = nl[idx]
+            for idx, x in enumerate(range(COLS)):
+                board[(x, y)] = nl[idx]
     elif direction == "up":
         for x in range(COLS):
             ys = list(range(ROWS))
             line = [board[(x, y)] for y in ys]
             nl, moved, made_2048 = move_line(line)
-            moved_any |= moved; won_this_move |= made_2048
-            for idx, y in enumerate(ys): board[(x, y)] = nl[idx]
+            moved_any |= moved
+            won_this_move |= made_2048
+            for idx, y in enumerate(ys):
+                board[(x, y)] = nl[idx]
     elif direction == "down":
         for x in range(COLS):
             ys = list(reversed(range(ROWS)))
             line = [board[(x, y)] for y in ys]
             nl, moved, made_2048 = move_line(line)
-            moved_any |= moved; won_this_move |= made_2048
+            moved_any |= moved
+            won_this_move |= made_2048
             nl = list(reversed(nl))
-            for idx, y in enumerate(range(ROWS)): board[(x, y)] = nl[idx]
+            for idx, y in enumerate(range(ROWS)):
+                board[(x, y)] = nl[idx]
     else:
         return False
     if moved_any:
         if won_this_move or any(v == 2048 for v in board.values()):
             update_ui(pad, board)
-            try: buttonpad.alert("You win!")
-            except Exception: pass
-            new_game(pad, board); return True
-        add_random_tile(board); update_ui(pad, board)
+            try:
+                buttonpad.alert("You win!")
+            except Exception:
+                pass
+            new_game(pad, board)
+            return True
+        add_random_tile(board)
+        update_ui(pad, board)
         any_moves_possible = False
-        if empty_positions(board): any_moves_possible = True
+        if empty_positions(board):
+            any_moves_possible = True
         for y in range(ROWS):
             for x in range(COLS):
                 v = board[(x, y)]
-                if x + 1 < COLS and board[(x + 1, y)] == v: any_moves_possible = True; break
-                if y + 1 < ROWS and board[(x, y + 1)] == v: any_moves_possible = True; break
+                if x + 1 < COLS and board[(x + 1, y)] == v:
+                    any_moves_possible = True
+                    break
+                if y + 1 < ROWS and board[(x, y + 1)] == v:
+                    any_moves_possible = True
+                    break
         if not any_moves_possible:
-            try: buttonpad.alert("Game Over")
-            except Exception: pass
+            try:
+                buttonpad.alert("Game Over")
+            except Exception:
+                pass
             new_game(pad, board)
     return moved_any
 
@@ -174,7 +195,9 @@ def new_game(pad, board: BoardType) -> None:
     for y in range(ROWS):
         for x in range(COLS):
             board[(x, y)] = 0
-    add_random_tile(board); add_random_tile(board); update_ui(pad, board)
+    add_random_tile(board)
+    add_random_tile(board)
+    update_ui(pad, board)
 
 
 def main() -> None:
@@ -208,7 +231,8 @@ def main() -> None:
     for y in range(ROWS):
         for x in range(COLS):
             el = pad[x, y]  # type: ignore[index]
-            el.text_color = TEXT_COLOR; el.font_size = FONT_SIZE
+            el.text_color = TEXT_COLOR
+            el.font_size = FONT_SIZE
     pad.run()
 
 

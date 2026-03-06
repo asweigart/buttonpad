@@ -1,4 +1,3 @@
-from __future__ import annotations
 """Simon memory game implemented with ButtonPad.
 
 Gameplay:
@@ -13,6 +12,8 @@ Implementation notes for beginners:
     * User clicks are disabled while the sequence is playing (state['busy']).
     * High score persists until the program is closed (not saved to disk).
 """
+
+from __future__ import annotations
 import random
 from typing import List
 import buttonpad
@@ -93,12 +94,19 @@ def main() -> None:
                     pass
 
     sequence: List[int] = []
-    state = {"busy": False, "expect": 0, "accept": False, "timer_id": None, "score": 0, "high_score": 0}
+    state = {
+        "busy": False,
+        "expect": 0,
+        "accept": False,
+        "timer_id": None,
+        "score": 0,
+        "high_score": 0,
+    }
 
     def set_lit(idx: int, lit: bool) -> None:
         """Turn a quadrant on (bright) or off (base)."""
         x, y = idx % COLS, idx // COLS
-        pad[x, y].bg_color = (LIT_COLORS[idx] if lit else BASE_COLORS[idx])  # type: ignore[index]
+        pad[x, y].bg_color = LIT_COLORS[idx] if lit else BASE_COLORS[idx]  # type: ignore[index]
 
     def flash_idx(idx: int, on_ms: int, after_cb) -> None:
         """Flash a single index for on_ms then call after_cb."""
@@ -119,8 +127,10 @@ def main() -> None:
                 state["accept"] = True
                 return
             idx = sequence[i]
+
             def cont():
                 pad.root.after(GAP_MS, advance)
+
             flash_idx(idx, FLASH_MS, cont)
 
         def advance():

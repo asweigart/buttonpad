@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Dodgerace mini-game using ButtonPad.
 
 Goal: Move the blue player square to the green goal square while avoiding
@@ -20,6 +18,7 @@ Beginner guide:
     * Timing: Tk's after() schedules the tick() function every TICK_MS ms.
 """
 
+from __future__ import annotations
 import random
 from typing import Dict, List, Tuple, Set
 
@@ -108,7 +107,9 @@ def draw_all(pad, state: Dict[str, object]) -> None:
 def update_status(pad, state: Dict[str, object]) -> None:
     """Display current score & high score in the status bar."""
     try:
-        pad.status_bar = INSTRUCTIONS + f"Score: {state['score']}  High score: {state['high_score']}"
+        pad.status_bar = (
+            INSTRUCTIONS + f"Score: {state['score']}  High score: {state['high_score']}"
+        )
     except Exception:
         pass
 
@@ -170,13 +171,21 @@ def spawn_hazard(pad, state: Dict[str, object]) -> None:
     """
     side = random.choice(["left", "right", "top", "bottom"])
     if side == "left":
-        x = 0; y = random.randrange(ROWS); dx, dy = 1, 0
+        x = 0
+        y = random.randrange(ROWS)
+        dx, dy = 1, 0
     elif side == "right":
-        x = COLS - 1; y = random.randrange(ROWS); dx, dy = -1, 0
+        x = COLS - 1
+        y = random.randrange(ROWS)
+        dx, dy = -1, 0
     elif side == "top":
-        x = random.randrange(COLS); y = 0; dx, dy = 0, 1
+        x = random.randrange(COLS)
+        y = 0
+        dx, dy = 0, 1
     else:  # bottom
-        x = random.randrange(COLS); y = ROWS - 1; dx, dy = 0, -1
+        x = random.randrange(COLS)
+        y = ROWS - 1
+        dx, dy = 0, -1
     hset: Set[Tuple[int, int]] = state["hazard_set"]  # type: ignore[assignment]
     if (x, y) in hset:  # Already something there; skip spawn.
         return
@@ -219,7 +228,7 @@ def move_hazards(pad, state: Dict[str, object]) -> bool:
     state["hazards"] = new_list
     state["hazard_set"] = new_set
     affected = old_set | new_set  # Union of old & new cells to repaint
-    for (ax, ay) in affected:
+    for ax, ay in affected:
         draw_cell(pad, state, ax, ay)
     return False
 

@@ -17,7 +17,6 @@ Beginner pointers:
 """
 
 import random
-import sys
 from typing import Dict, List, Optional, Set, Tuple
 import buttonpad
 

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Flood-It clone using ButtonPad.
 
 Game rules (simplified): Starting from the top-left corner, change the color
@@ -19,6 +17,7 @@ Beginner notes:
         produces the same puzzle, making comparisons of move counts meaningful.
 """
 
+from __future__ import annotations
 from typing import List, Tuple, Dict
 import random
 

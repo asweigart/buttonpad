@@ -1,4 +1,3 @@
-from __future__ import annotations
 """Human vs Human Tic Tac Toe.
 
 Implementation overview for beginners:
@@ -6,6 +5,8 @@ Implementation overview for beginners:
   * We check victory after each move by enumerating 8 possible winning lines.
   * A simple state dict tracks whose turn it is and cumulative win/tie counts.
 """
+from __future__ import annotations
+
 import buttonpad
 from typing import List, Optional, Tuple, Dict
 
@@ -98,9 +99,11 @@ def handle_click(el, x: int, y: int) -> None:
     el.font_size = 28
     w = winner(board)
     if w is not None:
-        end_game(w); return
+        end_game(w)
+        return
     if board_full(board):
-        end_game(None); return
+        end_game(None)
+        return
     state["who"] = "O" if who == "X" else "X"
 
 def main() -> None:

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Simple pixel art editor using ButtonPad.
 
 How it works:
@@ -13,6 +11,7 @@ Beginner notes:
     * cycle_color() just computes next index and calls set_cell().
 """
 
+from __future__ import annotations
 from typing import List
 
 try:

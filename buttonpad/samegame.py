@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """SameGame clone using ButtonPad.
 
 Rules summary:
@@ -14,6 +12,8 @@ Implementation notes:
     * apply_gravity() compacts each column; shift_columns_left() compacts columns.
     * A simple in-memory HIGH_SCORE tracks best percentage this run.
 """
+
+from __future__ import annotations
 
 from typing import List, Optional, Tuple, Dict
 import random

@@ -22,8 +22,9 @@ Reading order suggestion for learners:
 
 from __future__ import annotations
 
-import random, buttonpad
-from typing import List, Tuple, Dict
+import random
+import buttonpad
+from typing import Tuple, Dict
 
 COLS = 20
 ROWS = 20  # cell rows (a control row is added below)

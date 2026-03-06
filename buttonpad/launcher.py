@@ -42,6 +42,7 @@ EXAMPLES: List[Tuple[str, str]] = [
     ("TTT vs CPU", "tictactoevscpu.py"),
     ("8 Queens", "eightqueens.py"),
     ("2048", "twentyfortyeight.py"),
+    ("Rainbow Pad", "rainbowpad.py"),
 ]  # 26 entries; remaining 4 cells left blank
 
 def main() -> None:

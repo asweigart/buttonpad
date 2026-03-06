@@ -15,7 +15,6 @@ Code organization overview:
 Feel free to skim the constants, then read the functions from top to bottom.
 """
 
-import sys
 from typing import List, Optional, Tuple, Dict
 import buttonpad
 

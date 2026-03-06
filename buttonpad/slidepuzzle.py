@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """15-Puzzle (sliding tiles) implemented with ButtonPad.
 
 Gameplay basics:
@@ -15,6 +13,8 @@ Implementation notes:
         (blank displacements caused by player). Solve replays them backwards.
     * We count player moves only (shuffling doesn't increment the move counter).
 """
+
+from __future__ import annotations
 
 from typing import List, Tuple
 import random
@@ -64,7 +64,7 @@ def blank_row_from_bottom(board: List[List[int]]) -> int:
     for y in range(ROWS - 1, -1, -1):
         for x in range(COLS):
             if board[y][x] == 0:
-                return (ROWS - y)
+                return ROWS - y
     return 1
 
 
@@ -84,7 +84,9 @@ def is_solvable(board: List[List[int]]) -> bool:
     inv = count_inversions(arr)
     blank_from_bottom = blank_row_from_bottom(board)
     if COLS % 2 == 0:
-        return (blank_from_bottom % 2 == 1 and inv % 2 == 0) or (blank_from_bottom % 2 == 0 and inv % 2 == 1)
+        return (blank_from_bottom % 2 == 1 and inv % 2 == 0) or (
+            blank_from_bottom % 2 == 0 and inv % 2 == 1
+        )
     return inv % 2 == 0
 
 
@@ -184,10 +186,21 @@ def main() -> None:
             update_status()
             update_ui()
 
-    keymap_tiles = {"Up": (0, -1), "w": (0, -1), "Down": (0, 1), "s": (0, 1), "Left": (-1, 0), "a": (-1, 0), "Right": (1, 0), "d": (1, 0)}
+    keymap_tiles = {
+        "Up": (0, -1),
+        "w": (0, -1),
+        "Down": (0, 1),
+        "s": (0, 1),
+        "Left": (-1, 0),
+        "a": (-1, 0),
+        "Right": (1, 0),
+        "d": (1, 0),
+    }
     for ks, (tdx, tdy) in keymap_tiles.items():
         try:
-            pad.root.bind_all(f"<KeyPress-{ks}>", lambda e, tdx=tdx, tdy=tdy: key_slide(tdx, tdy))
+            pad.root.bind_all(
+                f"<KeyPress-{ks}>", lambda e, tdx=tdx, tdy=tdy: key_slide(tdx, tdy)
+            )
         except Exception:
             pass
 
@@ -245,8 +258,11 @@ def main() -> None:
         for y in range(ROWS):
             for x in range(COLS):
                 board[y][x] = nums[y * COLS + x]
-        gen_moves.clear(); user_moves.clear(); move_state["count"] = 0
-        update_status(); update_ui()
+        gen_moves.clear()
+        user_moves.clear()
+        move_state["count"] = 0
+        update_status()
+        update_ui()
         last = (0, 0)
         steps = 80
         for _ in range(steps):
@@ -254,7 +270,11 @@ def main() -> None:
             cand: List[Tuple[int, int]] = []
             for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nx, ny = bx + dx, by + dy
-                if 0 <= nx < COLS and 0 <= ny < ROWS and (dx, dy) != (-last[0], -last[1]):
+                if (
+                    0 <= nx < COLS
+                    and 0 <= ny < ROWS
+                    and (dx, dy) != (-last[0], -last[1])
+                ):
                     cand.append((dx, dy))
             if not cand:
                 cand = [(1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -270,7 +290,11 @@ def main() -> None:
                 cand: List[Tuple[int, int]] = []
                 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                     nx, ny = bx + dx, by + dy
-                    if 0 <= nx < COLS and 0 <= ny < ROWS and (dx, dy) != (-last[0], -last[1]):
+                    if (
+                        0 <= nx < COLS
+                        and 0 <= ny < ROWS
+                        and (dx, dy) != (-last[0], -last[1])
+                    ):
                         cand.append((dx, dy))
                 if not cand:
                     cand = [(1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -283,10 +307,14 @@ def main() -> None:
     for y in range(ROWS):
         for x in range(COLS):
             pad[x, y + 1].on_click = on_click  # type: ignore[index]
-    pad[0, 0].on_click = lambda _e, _x, _y: new_game(); pad[0, 0].text = "New"
-    pad[2, 0].on_click = lambda _e, _x, _y: do_solve(); pad[2, 0].text = "Solve"
+    pad[0, 0].on_click = lambda _e, _x, _y: new_game()
+    pad[0, 0].text = "New"
+    pad[2, 0].on_click = lambda _e, _x, _y: do_solve()
+    pad[2, 0].text = "Solve"
 
-    update_ui(); new_game(); pad.run()
+    update_ui()
+    new_game()
+    pad.run()
 
 
 if __name__ == "__main__":

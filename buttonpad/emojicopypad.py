@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Emoji Copy Pad.
 
 Purpose: Quickly browse groups of emojis and copy one to the system
@@ -18,6 +16,8 @@ Beginner walkthrough:
       platforms.
   5. Tooltips (if supported) show the human-readable emoji name.
 """
+
+from __future__ import annotations
 
 from typing import Dict, List, Sequence
 import sys

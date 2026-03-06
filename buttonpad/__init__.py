@@ -7,7 +7,7 @@ __version__ = "0.4.1"
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union, Any, TYPE_CHECKING
+from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union, Any
 import tkinter as tk
 from pymsgbox import (
     # Import with different names so they can be wrapped for refocusing feature.
@@ -1079,9 +1079,9 @@ class ButtonPad:
         func: Optional[Callable[[], None]] = None
         accel: Optional[str] = None
         if callable(spec):
-            func = lambda f=spec: f()
+            func = lambda f=spec: f()  # noqa: E731
         elif isinstance(spec, tuple) and len(spec) >= 1 and callable(spec[0]):
-            func = lambda f=spec[0]: f()
+            func = lambda f=spec[0]: f()  # noqa: E731
             if len(spec) >= 2 and isinstance(spec[1], str):
                 accel = spec[1]
         else:
@@ -1316,7 +1316,7 @@ class ButtonPad:
         self._row_cell_counts = row_lengths  # expose for introspection/debug
         if row_lengths:
             max_len = max(row_lengths)
-            if any(l != max_len for l in row_lengths):
+            if any(row_length != max_len for row_length in row_lengths):
                 try:
                     warnings.warn(
                         (

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Othello (Reversi) versus a simple CPU opponent using ButtonPad.
 
 Features / rules:
@@ -16,6 +14,8 @@ Beginner notes:
     * find_flips() implements core Othello legality: collects bracketed discs.
     * The CPU's move selection is deliberately simple and NOT a strong strategy.
 """
+
+from __future__ import annotations
 
 import buttonpad
 from typing import List, Tuple, Optional, Dict

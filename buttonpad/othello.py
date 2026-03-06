@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Othello (Reversi) implemented with ButtonPad.
 
 Overview:
@@ -18,6 +16,8 @@ Beginner notes:
         flipped if a move is placed at (x,y); empty list means move is illegal.
     * The status bar is updated with counts after each successful move.
 """
+
+from __future__ import annotations
 
 import buttonpad
 from typing import List, Tuple, Dict

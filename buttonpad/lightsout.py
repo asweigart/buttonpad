@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Lights Out puzzle implemented with ButtonPad.
 
 Goal: Turn off (darken) all the lights. Clicking a cell toggles that cell and
@@ -14,8 +12,10 @@ Beginner notes:
         to both the pad (UI) and the shared state list.
 """
 
+from __future__ import annotations
+
 import random
-from typing import List, Tuple, Optional
+from typing import List
 from buttonpad import ButtonPad
 
 # 5x5 grid where each cell is a standalone button (no-merge using backtick `)

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Connect Four implemented with ButtonPad.
 
 Beginner-friendly notes:
@@ -13,6 +11,8 @@ Beginner-friendly notes:
 
 Read top-to-bottom: constants, state, helpers, gameplay functions, then main().
 """
+
+from __future__ import annotations
 
 from typing import List, Optional, Dict, Tuple
 

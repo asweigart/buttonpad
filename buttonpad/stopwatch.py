@@ -10,7 +10,6 @@ Beginner notes:
 """
 import sys
 import time
-from typing import Optional
 
 # Allow local import when running from repo
 sys.path.insert(0, __file__.split('/examples/')[0])

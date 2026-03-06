@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Magic 8-Ball animation using ButtonPad.
 
 Features:
@@ -20,6 +18,8 @@ Beginner notes:
         Tk's after() via pad.root.after(milliseconds, callback).
     * All cell updates go through the helper set_cell() for consistency.
 """
+
+from __future__ import annotations
 
 from typing import List, Tuple
 import random

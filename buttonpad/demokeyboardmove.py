@@ -11,7 +11,6 @@ Beginner overview:
 
 from __future__ import annotations
 
-from typing import Tuple
 import buttonpad
 
 COLS = 8

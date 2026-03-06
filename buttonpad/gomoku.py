@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Gomoku game (Five in a Row) implemented with ButtonPad.
 
 Rules (simplified):
@@ -15,8 +13,10 @@ Implementation notes for beginners:
         directions along each of the 4 line orientations passing through the last move.
 """
 
+from __future__ import annotations
+
 import buttonpad
-from typing import List, Tuple
+from typing import List
 
 SIZE = 15
 WHITE_BG = "#ffffff"
@@ -39,7 +39,9 @@ def in_bounds(x: int, y: int) -> bool:
     return 0 <= x < SIZE and 0 <= y < SIZE
 
 
-def count_in_direction(board: List[List[int]], x: int, y: int, dx: int, dy: int, who: int) -> int:
+def count_in_direction(
+    board: List[List[int]], x: int, y: int, dx: int, dy: int, who: int
+) -> int:
     """Count consecutive stones for player 'who' from (x,y) stepping (dx,dy).
 
     We advance one step first (so we don't recount the origin cell) then keep
@@ -84,7 +86,6 @@ def main() -> None:
 
     # Board state: 0 empty, 1 white, 2 black
     board: List[List[int]] = [[0 for _ in range(SIZE)] for _ in range(SIZE)]
-    cells = [pad[x, y] for y in range(SIZE) for x in range(SIZE)]  # type: ignore[list-item]
 
     turn = {"who": 1}  # Mutable dict used so inner functions can modify current player
     game = {"over": False}  # Track if game ended to ignore extra clicks

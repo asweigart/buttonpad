@@ -1,4 +1,3 @@
-from __future__ import annotations
 """Tic Tac Toe: Human (X) vs Simple CPU (O).
 
 CPU heuristic order:
@@ -11,6 +10,9 @@ Design notes:
     * After each move we test for victory or tie before switching turns.
     * CPU move runs after a small delay for better user feedback.
 """
+
+from __future__ import annotations
+
 import buttonpad
 from typing import List, Optional, Tuple, Dict
 
@@ -63,18 +65,24 @@ def choose_cpu_move(board: BoardType) -> Optional[XYCoordType]:
         for x, y in empties:
             board[(x, y)] = sym
             if winner(board) == sym:
-                board[(x, y)] = ""; return (x, y)
+                board[(x, y)] = ""
+                return (x, y)
             board[(x, y)] = ""
         return None
     mv = try_place("O")
-    if mv: return mv
+    if mv: 
+        return mv
     mv = try_place("X")
-    if mv: return mv
-    if board[(1, 1)] == "": return (1, 1)
+    if mv: 
+        return mv
+    if board[(1, 1)] == "": 
+        return (1, 1)
     for x, y in [(0, 0), (2, 0), (0, 2), (2, 2)]:
-        if board[(x, y)] == "": return (x, y)
+        if board[(x, y)] == "": 
+            return (x, y)
     for x, y in [(1, 0), (0, 1), (2, 1), (1, 2)]:
-        if board[(x, y)] == "": return (x, y)
+        if board[(x, y)] == "": 
+            return (x, y)
     return empties[0]
 
 
@@ -97,52 +105,67 @@ def reset_board() -> None:
     for y in range(SIZE):
         for x in range(SIZE):
             board[(x, y)] = ""
-    state["who"] = "X"; state["over"] = False
+    state["who"] = "X"
+    state["over"] = False
     update_ui()
 
 def end_game(sym: Optional[str]) -> None:
     """Show result dialog then reset board for a new game."""
     state["over"] = True
     try:
-        if sym is None: buttonpad.alert("It's a tie!")
-        else: buttonpad.alert(f"{sym} wins!")
-    except Exception: pass
+        if sym is None: 
+            buttonpad.alert("It's a tie!")
+        else: 
+            buttonpad.alert(f"{sym} wins!")
+    except Exception: 
+        pass
     reset_board()
 
 def after_move_checks() -> bool:
     """Return True if game ended (win or tie) after a move."""
     w = winner(board)
     if w is not None:
-        end_game(w); return True
+        end_game(w)
+        return True
     if board_full(board):
-        end_game(None); return True
+        end_game(None)
+        return True
     return False
 
 def cpu_move() -> None:
     """Select and play CPU's move, then switch turn to human if game not over."""
-    if state["over"] or state["who"] != "O": return
+    if state["over"] or state["who"] != "O": 
+        return
     mv = choose_cpu_move(board)
     if mv is None:
-        if not after_move_checks(): end_game(None)
+        if not after_move_checks(): 
+            end_game(None)
         return
     x, y = mv
     if board[(x, y)] != "":
         empties = empty_cells(board)
         if not empties:
-            if not after_move_checks(): end_game(None)
+            if not after_move_checks(): 
+                end_game(None)
             return
         x, y = empties[0]
     board[(x, y)] = "O"
     if pad is not None:
-        pad[x, y].text = "O"; pad[x, y].font_size = 28  # type: ignore[index]
-    if after_move_checks(): return
+        pad[x, y].text = "O"
+        pad[x, y].font_size = 28  # type: ignore[index]
+    if after_move_checks(): 
+        return
     state["who"] = "X"
 
 def handle_click(el, x: int, y: int) -> None:
     """Handle human move then queue CPU's move."""
-    if state["over"] or state["who"] != "X" or board[(x, y)] != "": return
-    board[(x, y)] = "X"; el.text = "X"; el.font_size = 28
-    if after_move_checks(): return
+    if state["over"] or state["who"] != "X" or board[(x, y)] != "": 
+        return
+    board[(x, y)] = "X"
+    el.text = "X"
+    el.font_size = 28
+    if after_move_checks(): 
+        return
     state["who"] = "O"
     if pad is not None:
         pad.root.after(120, cpu_move)

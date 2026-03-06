@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Memory (Concentration) Puzzle using ButtonPad.
 
 Rules / gameplay:
@@ -22,8 +20,10 @@ Implementation highlights (beginner friendly):
         centralized in one function.
 """
 
+from __future__ import annotations
+
 import random
-from typing import List, Tuple, Dict
+from typing import Tuple, Dict
 
 import buttonpad
 
